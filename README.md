@@ -2,6 +2,8 @@
 
 Odzivna, statična spletna stran v slovenščini, angleščini, nemščini in španščini. Za delovanje ne potrebuje Node.js, sestavljanja ali podatkovne baze.
 
+Spletna stran: [Ribja pot – Srčna pot Svibnik](https://dejanban.github.io/Srcna_pot_spletna_Stran/)
+
 ## Lokalni zagon
 
 V korenski mapi projekta zaženite:
