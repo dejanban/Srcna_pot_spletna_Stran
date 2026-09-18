@@ -2,11 +2,18 @@
 Requires Pillow; the website itself needs only a static web server.
 """
 from pathlib import Path
+from shutil import copyfile
 from PIL import Image
 import xml.etree.ElementTree as ET
 import math, json
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'assets'
+# Keep the supplied trail artwork intact; CSS frames the three square signs.
+for source, target in [
+    ('UsmerjevalneTablice_9x9.jpg', 'trail-signs.jpg'),
+    ('KotičekZaSproščanje_15x30.jpg', 'relaxation-sign.jpg'),
+]:
+    copyfile(ROOT / 'source/images' / source, OUT / 'images' / target)
 board = Image.open(ROOT / 'source/images/InfoTabla_130x120.jpg').convert('RGB')
 board.save(OUT / 'images/information-board.webp', quality=90)
 # Crop the original photographs without changing their content.

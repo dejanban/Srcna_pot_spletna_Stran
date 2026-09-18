@@ -16,6 +16,7 @@ Odprite **http://127.0.0.1:8000**. Za objavo na statičnem gostovanju potrebujet
 
 ## Vsebina
 
+- Razdelek »Oznake ob poti« prikazuje oznako društva, smerni tablici Ribje poti za levo in desno ter tablo za kotičke za sproščanje. Pojasnila in nadomestna besedila slik so v vseh štirih jezikih.
 - Privzeti jezik je slovenščina. Izbira v zgornjem desnem kotu se shrani v brskalniku; parameter `?lang=sl|en|de|es` ima prednost.
 - Celoten opis z informacijske table, vse njene oštevilčene točke, originalna tabla, tri priložene spletne povezave in vseh šest logotipov sodelujočih.
 - Interaktivni zemljevid Leaflet z obema izvirnima trasama GPX, povečavo, pomanjšavo, prikazom celotne poti in prenosi GPX.
