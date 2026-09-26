@@ -2,7 +2,7 @@
 Requires Pillow; the website itself needs only a static web server.
 """
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageOps
 import xml.etree.ElementTree as ET
 import math, json
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,9 +13,37 @@ board.save(OUT / 'images/information-board.webp', quality=90)
 for name, box in {
     'panda': (43,1185,375,1360), 'bridge': (398,1185,727,1360),
     'lake': (753,1185,1082,1360), 'solar': (1108,1185,1436,1360),
-    'partners': (185,1650,1730,1745),
 }.items():
     board.crop(box).save(OUT / f'images/{name}.webp', quality=95)
+# Hero: the board's map with both trails, inside its white frame.
+board.crop((52,249,1428,1148)).save(OUT / 'images/hero-map.webp', quality=90)
+# Trail marker photos: 3:4 crops around the posts, scaled for the web.
+for name, (src, box) in {
+    'marker-junction': ('22014', (300,1000,2550,4000)),
+    'marker-forest': ('22015', (300,700,2700,3900)),
+    'marker-exercise': ('22016', (450,600,2850,3800)),
+}.items():
+    photo = ImageOps.exif_transpose(Image.open(ROOT / f'source/images/{src}.jpg')).convert('RGB').crop(box)
+    photo.resize((900,1200), Image.LANCZOS).save(OUT / f'images/{name}.webp', quality=82)
+# Vector logos: drop the embedded CMYK ICC profile and Inkscape editor data (~750 KB each).
+SVG, XLINK = 'http://www.w3.org/2000/svg', 'http://www.w3.org/1999/xlink'
+ET.register_namespace('', SVG); ET.register_namespace('xlink', XLINK)
+EDITOR = ('http://www.inkscape.org/namespaces/inkscape', 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd')
+(OUT / 'images/logos').mkdir(exist_ok=True)
+for name, src in {
+    'obcina-crnomelj': 'Obcina_Crnomelj', 'zveza-koronarnih-drustev': 'Zveza koronarnih društev in klubov Slovenije',
+    'drustvo-koronarnih-bolnikov': 'Društvo koronarnih bolnikov Dolenjske in Bele krajine',
+    'ks-crnomelj': 'Krajevna skupnost Črnomelj', 'zd-crnomelj': 'Zdravstveni dom Črnomelj',
+    'ckz-crnomelj': 'Center za krepitev zdravja Črnomelj',
+}.items():
+    tree = ET.parse(ROOT / f'source/Logos/{src}.svg')
+    for parent in tree.iter():
+        for child in list(parent):
+            if child.tag in (f'{{{SVG}}}color-profile', f'{{{SVG}}}metadata') or child.tag.split('}')[0][1:] in EDITOR:
+                parent.remove(child)
+        for key in [k for k in parent.attrib if k.split('}')[0][1:] in EDITOR]:
+            del parent.attrib[key]
+    tree.write(OUT / f'images/logos/{name}.svg', encoding='utf-8', xml_declaration=False)
 brochure = Image.open(ROOT / 'source/images/TableZaRazgibavanje.jpg').convert('RGB')
 brochure.thumbnail((2600,2600))
 brochure.save(OUT / 'images/exercises.webp', quality=88)

@@ -17,7 +17,8 @@ Odprite **http://127.0.0.1:8000**. Za objavo na statičnem gostovanju potrebujet
 ## Vsebina
 
 - Privzeti jezik je slovenščina. Izbira v zgornjem desnem kotu se shrani v brskalniku; parameter `?lang=sl|en|de|es` ima prednost.
-- Celoten opis z informacijske table, vse njene oštevilčene točke, originalna tabla, tri priložene spletne povezave in vseh šest logotipov sodelujočih.
+- Celoten opis z informacijske table, vse njene oštevilčene točke, originalna tabla, tri priložene spletne povezave in vseh šest vektorskih logotipov sodelujočih.
+- Fotografije stebričkov z oznakami Ribje in Srčne poti ter stebrička za vadbo na prostem.
 - Interaktivni zemljevid Leaflet z obema izvirnima trasama GPX, povečavo, pomanjšavo, prikazom celotne poti in prenosi GPX.
 - Višinski profil s prikazom položaja na zemljevidu. Drsnik podpira tipkovnico in dotik.
 - Štiristranski PDF brošure, vdelan pregledovalnik PDF, slikovni prikaz vseh strani in neposreden prenos. Izvirna brošura in imena organizacij ostajajo slovenska; spletni opisi in uporabniški vmesnik so prevedeni.
@@ -35,10 +36,12 @@ assets/
   documents/               štiristranski PDF brošure
   fonts/                   lokalne pisave in licence OFL
   gpx/                     izvirni GPX, preimenovan brez presledkov
-  images/                  spletne slike, izrezi fotografij in logotipov
+  images/                  spletne slike, izrezi fotografij in fotografije oznak
+  images/logos/            očiščeni vektorski logotipi (SVG)
   vendor/leaflet/           Leaflet 1.9.4 in licenca
 source/
   images/                  izvirni JPG, brez sprememb
+  Logos/                   izvirni vektorski logotipi iz Inkscapa
   notes/                   izvirni prompt, prepis, povezave in barve
 scripts/prepare_assets.py  ponovljiva priprava slik, PDF in podatkov GPX
 tests/browser_check.py     funkcionalno preverjanje v brskalniku

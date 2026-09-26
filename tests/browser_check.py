@@ -81,6 +81,9 @@ with sync_playwright() as p:
     assert page.locator('.board-image').is_visible()
     page.locator('.partners').scroll_into_view_if_needed()
     page.wait_for_function("[...document.querySelectorAll('.partners img')].every(i=>i.complete&&i.naturalWidth>0)")
+    page.locator('.markers').scroll_into_view_if_needed()
+    assert page.locator('.markers img').count() == 3
+    page.wait_for_function("[...document.querySelectorAll('.markers img')].every(i=>i.complete&&i.naturalWidth>0)")
     # Every local link must resolve, including fonts, PDFs, GPX and artwork.
     links=page.evaluate("[...document.querySelectorAll('[src],link[href],a[href]')].map(el=>el.src||el.href).filter(u=>u&&u.startsWith(location.origin)&&!u.includes('#'))")
     for url in set(links):
