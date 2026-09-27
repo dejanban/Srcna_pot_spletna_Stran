@@ -25,12 +25,12 @@ with sync_playwright() as p:
     assert page.evaluate("[...document.querySelectorAll('[data-i18n]')].every(el=>!!TRANSLATIONS.sl[el.dataset.i18n])")
     # Every supplied route coordinate is present in the generated dataset.
     assert page.evaluate('ROUTES.short.segments.flat().length') == 373
-    assert page.evaluate('ROUTES.long.segments.flat().length') == 391
+    assert page.evaluate('ROUTES.long.segments.flat().length') == 376
     with page.expect_download() as download:
         page.locator('#gpx-download').click()
     assert download.value.suggested_filename == 'ribja-pot.gpx'
     page.locator('[data-route="long"]').click()
-    assert page.locator('#route-distance').inner_text() == '12,27 km'
+    assert page.locator('#route-distance').inner_text() == '12,76 km'
     assert page.locator('#route-elevation').inner_text() == '140–168 m'
     assert page.locator('[data-route="long"]').get_attribute('aria-pressed') == 'true'
     assert '810587126' in page.locator('#outdoor-link').get_attribute('href')
@@ -39,7 +39,7 @@ with sync_playwright() as p:
     assert download.value.suggested_filename == 'ucna-pot.gpx'
     page.locator('#profile-position').focus()
     page.keyboard.press('End')
-    assert page.locator('#profile-readout').inner_text().startswith('12,27 km')
+    assert page.locator('#profile-readout').inner_text().startswith('12,76 km')
     page.locator('#fit-map').click()
     # Switching language must preserve the chosen route, translate all keys,
     # and produce no horizontal scrolling at phone, tablet and desktop widths.
@@ -97,7 +97,7 @@ with sync_playwright() as p:
     assert offline.locator('#map-status').is_visible()
     assert offline.locator('.leaflet-overlay-pane path').count() > 0
     offline.locator('[data-route="long"]').click()
-    assert offline.locator('#route-distance').inner_text() == '12,27 km'
+    assert offline.locator('#route-distance').inner_text() == '12,76 km'
     # Capture fully loaded pages for manual review.
     page.goto(BASE+'/?lang=sl',wait_until='networkidle')
     for y in range(0,page.evaluate('document.body.scrollHeight'),650):

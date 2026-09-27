@@ -70,13 +70,22 @@ for key,filename in [('short','ribja-pot'),('long','ucna-pot')]:
         points=[]
         for p in seg.findall('g:trkpt',ns):
             ele=p.find('g:ele',ns)
-            if ele is None: raise ValueError('Missing elevation')
-            point=[float(p.attrib['lat']),float(p.attrib['lon']),float(ele.text)]
-            if points:
-                total+=distance(points[-1],point)
-                delta=point[2]-points[-1][2]
-                ascent+=max(delta,0); descent+=max(-delta,0)
+            # GDAL exports write 0.0 where the elevation is unknown; fill those below.
+            height=float(ele.text) if ele is not None and float(ele.text)>0 else None
+            point=[float(p.attrib['lat']),float(p.attrib['lon']),height]
+            if points: total+=distance(points[-1],point)
             points.append(point+[round(total,2)])
+        known=[p for p in points if p[2] is not None]
+        if not known: raise ValueError('Missing elevation')
+        for p in points:
+            if p[2] is None:
+                before=max((k for k in known if k[3]<=p[3]),key=lambda k:k[3],default=None)
+                after=min((k for k in known if k[3]>=p[3]),key=lambda k:k[3],default=None)
+                before,after=before or after,after or before
+                share=(p[3]-before[3])/(after[3]-before[3]) if after[3]>before[3] else 0
+                p[2]=round(before[2]+(after[2]-before[2])*share,1)
+        for a,b in zip(points,points[1:]):
+            delta=b[2]-a[2]; ascent+=max(delta,0); descent+=max(-delta,0)
         segments.append(points)
     flat=[p for s in segments for p in s]; heights=[p[2] for p in flat]
     data[key]={'segments':segments,'distance':round(total),'min':round(min(heights),1),'max':round(max(heights),1),

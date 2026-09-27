@@ -54,7 +54,7 @@ Razdalja je izračunana s Haversinovo formulo med zaporednimi točkami v vsakem 
 | Trasa | Razdalja GPX | Najnižja–najvišja višina | Seštevek vzpona / spusta |
 | --- | --- | --- | --- |
 | Ribja pot | 4,633 km | 143,6–183,1 m | +125 / −133 m |
-| Učna pot | 12,272 km | 139,9–167,5 m | +219 / −229 m |
+| Učna pot | 12,763 km | 139,9–167,5 m | +191 / −201 m |
 
 Vzpon in spust sta **neglajena seštevka** razlik višin. Šum in kakovost GPX lahko povzročita precenjene vrednosti; zato sta na strani izrecno označena kot okvirna. Višinski razpon ni enak skupnemu vzponu. Tabla navaja 32 m višinske razlike za krajšo pot; priloženi GPX kaže približno 40 m. Čas 1 h 15 min in ocena »lahka pot« izvirata iz table in veljata za krajšo pot. Težavnost in čas daljše poti nista izmišljena.
 
